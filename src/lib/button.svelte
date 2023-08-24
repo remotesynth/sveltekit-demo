@@ -1,0 +1,10 @@
+<script>
+	export let url;
+</script>
+
+<a
+	href={url}
+	class="flex items-center px-4 py-2 mb-2 mr-4 text-sm text-gray-100 bg-blue-500 rounded-md md:mb-0 hover:bg-blue-600 dark:text-gray-100 dark:hover:bg-blue-500 dark:bg-blue-400"
+>
+	<slot />
+</a>
