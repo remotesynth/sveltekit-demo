@@ -2,7 +2,11 @@ import sdk from 'node-appwrite';
 import { APPWRITE_DB_ID, APPWRITE_SESSIONS_ID, APPWRITE_CFP_ID } from '$env/static/private';
 import { databases } from '$lib/server/AppWrite.js';
 
-export async function load({ params }) {
+export async function load({ params, url }) {
+	const cfpid = url.searchParams.get('accept');
+	if (cfpid) {
+		await databases.updateDocument(APPWRITE_DB_ID, APPWRITE_CFP_ID, cfpid, { Accepted: true });
+	}
 	const session = await databases.listDocuments(APPWRITE_DB_ID, APPWRITE_SESSIONS_ID, [
 		sdk.Query.equal('$id', params.id)
 	]);

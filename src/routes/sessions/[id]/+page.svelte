@@ -4,6 +4,7 @@
 	export let data;
 	const session = data.session;
 	const cfps = data.cfps;
+	const accept = $page.url.searchParams.get('accept');
 </script>
 
 <div class="mx-auto mb-12 text-center md:max-w-2xl">
@@ -40,8 +41,9 @@
 					Accepted
 				{:else}
 					<a
-						href={`${$page.url.pathname}?cfp=${cfp['$id']}`}
-						class="text-blue-500 dark:text-blue-300">Accepted?</a
+						href={`/accept/${session['$id']}/${cfp['$id']}`}
+						class="text-blue-500 dark:text-blue-300"
+						data-sveltekit-reload>Accepted?</a
 					>
 				{/if}
 			</li>

@@ -1,38 +1,30 @@
-# create-svelte
+# An example SvelteKit app
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This is a simple app example using SvelteKit. The app allows a user to create new session abstracts and indicate where they have submitted a CFP for that session. It is functional but intended purely for example purposes.
 
-## Creating a project
+The application uses AppWrite on the backend for both data storage and authentication using magic links. If you'd like to run the application, you'll need the following environment variables from your AppWrite account.
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+```
+APPWRITE_API_KEY=MY_KEY
+PUBLIC_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
+PUBLIC_APPWRITE_PROJECT_ID=PROJECTID
+APPWRITE_DB_ID=DATABASE_ID
+APPWRITE_SESSIONS_ID=SESSIONS_COLLECTION_ID
+APPWRITE_CFP_ID=CFP_COLLECTIONS_ID
 ```
 
-## Developing
+The current structure of the collections are:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+**Session**
+Title string Required
+Abstract string Required
+userid string Required
 
-```bash
-npm run dev
+**cfps**
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+SessionID string Required
+Conference string Required
+ConferenceDate datetime Required
+SubmissionDate datetime Required
+Accepted boolean
+URL string Required
