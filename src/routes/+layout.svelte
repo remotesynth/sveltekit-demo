@@ -1,5 +1,24 @@
 <script>
 	import '../app.css';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+	import { Client, Account } from 'appwrite';
+	import { PUBLIC_APPWRITE_ENDPOINT, PUBLIC_APPWRITE_PROJECT_ID } from '$env/static/public';
+
+	// check that the user is logged in
+	const client = new Client()
+		.setEndpoint(PUBLIC_APPWRITE_ENDPOINT)
+		.setProject(PUBLIC_APPWRITE_PROJECT_ID);
+	const account = new Account(client);
+	const promise = account.get();
+	promise.then(
+		function (response) {
+			// do nothing
+		},
+		function (error) {
+			if (browser) goto('/authenticate');
+		}
+	);
 </script>
 
 <section class="bg-white dark:bg-gray-800">

@@ -2,13 +2,13 @@
 	import { ID, Client, Account } from 'appwrite';
 	import { PUBLIC_APPWRITE_ENDPOINT, PUBLIC_APPWRITE_PROJECT_ID } from '$env/static/public';
 	export let message = '';
-	import { redirect } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { browser } from '$app/environment';
 
 	const client = new Client()
-		.setEndpoint(PUBLIC_APPWRITE_ENDPOINT) // Your API Endpoint
-		.setProject(PUBLIC_APPWRITE_PROJECT_ID); // Your project ID
+		.setEndpoint(PUBLIC_APPWRITE_ENDPOINT)
+		.setProject(PUBLIC_APPWRITE_PROJECT_ID);
 
 	const urlParams = $page.url.searchParams;
 	if (urlParams.has('userId') && urlParams.has('secret')) {
@@ -19,7 +19,11 @@
 		const promise = account.updateMagicURLSession(userid, secret);
 		promise.then(
 			function (response) {
-				goto('/');
+				if (browser) {
+					document.cookie = `userid=${userid}; path=/`;
+					document.cookie = `sessionid=${response['$id']}; path=/`;
+					goto('/');
+				}
 			},
 			function (error) {
 				message = 'Something went wrong!';

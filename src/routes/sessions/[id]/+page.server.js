@@ -10,8 +10,18 @@ export async function load({ params }) {
 		sdk.Query.equal('SessionID', params.id),
 		sdk.Query.orderDesc('SubmissionDate')
 	]);
-	return {
-		session: session.documents[0],
-		cfps: cfps.documents
-	};
+	if (session.documents.length) {
+		return {
+			session: session.documents[0],
+			cfps: cfps.documents
+		};
+	} else {
+		return {
+			session: {
+				Title: 'Not found',
+				Abstract: 'The session you are looking for does not exist.'
+			},
+			cfps: []
+		};
+	}
 }
